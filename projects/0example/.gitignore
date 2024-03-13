@@ -37,3 +37,6 @@ settings/
 *.uvguix*
 build
 output
+__pycache__
+.config.old
+.sconsign.delite
