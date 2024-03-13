@@ -21,7 +21,7 @@ path  = [cwd + '/TouchGFX']
 path += [cwd + '/TouchGFX/target']
 path += [cwd + '/TouchGFX/target/generated']
 path += [cwd + '/Middlewares/ST/touchgfx/framework/include']
-
+libpath = ''
 if rtconfig.CROSS_TOOL == 'gcc':
     libpath = [cwd + '/Middlewares/ST/touchgfx/lib/core/cortex_m7/gcc']
     libs += ['touchgfx-float-abi-hard']

@@ -1,4 +1,5 @@
 import os
+from allConfig import *
 
 PROJECT_NAME = os.path.basename(os.getcwd())
 

@@ -37,13 +37,11 @@ env.AppendUnique(CPPDEFINES=[])
 
 Export("RTT_ROOT")
 Export("rtconfig")
-
+SDK_LIB = ''
 if os.path.exists("libraries"):
-    libraries_path_prefix = "libraries"
+    SDK_LIB = "libraries"
 else:
-    libraries_path_prefix = "../../libraries"
-
-SDK_LIB = libraries_path_prefix
+    SDK_LIB = "../../libraries"
 Export("SDK_LIB")
 
 # prepare building environment
@@ -54,7 +52,7 @@ rtconfig.BSP_LIBRARY_TYPE = stm32_library
 
 if not os.path.exists("libraries"):
     # include libraries
-    objs.extend(SConscript(os.path.join(libraries_path_prefix, "SConscript")))
+    objs.extend(SConscript(os.path.join(SDK_LIB, "SConscript")))
 
     # include applications
     # objs.extend(SConscript(os.path.join(APP_ROOT, 'applications', 'SConscript')))
