@@ -137,6 +137,7 @@
 /* Socket is in the 'Network' category */
 
 #define RT_USING_CPLUSPLUS
+#define RT_USING_CPLUSPLUS11
 
 /* Network */
 
@@ -210,6 +211,8 @@
 
 /* Micrium: Micrium software products porting for RT-Thread */
 
+#define PKG_USING_PERF_COUNTER
+#define PKG_USING_PERF_COUNTER_V2241
 
 /* peripheral libraries and drivers */
 
@@ -245,6 +248,10 @@
 
 /* Arduino libraries */
 
+#define PKG_USING_RTDUINO
+#define RTDUINO_NO_SETUP_LOOP
+#define RTDUINO_SUPPORT_HIGH_PRECISION_MICROS
+#define PKG_USING_RTDUINO_LATEST_VERSION
 
 /* Projects and Demos */
 
