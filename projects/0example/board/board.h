@@ -86,6 +86,8 @@ void SystemClock_ReConfig(uint8_t mode);
 
 /*-------------------------- UART CONFIG END --------------------------*/
 
+#define  RT_WEAK rt_weak
+
 #ifdef __cplusplus
 }
 #endif

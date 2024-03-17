@@ -51,7 +51,7 @@ if PLATFORM == "gcc":
     AFLAGS = " -c" + DEVICE + " -x assembler-with-cpp -Wa,-mimplicit-it=thumb "
     LFLAGS = (
         DEVICE
-        + " -Wl,--gc-sections,-Map=rtthread.map,-cref,-u,Reset_Handler -T board/linker_scripts/STM32H750XBHx/link.lds"
+        + " -Wl,--gc-sections,-Map=build/rtthread.map,-cref,-u,Reset_Handler -T board/linker_scripts/STM32H750XBHx/link.lds"
     )
 
     CPATH = ""
@@ -66,8 +66,8 @@ if PLATFORM == "gcc":
     CXXFLAGS = CFLAGS
     CFLAGS += " -std=c99"
 
-    POST_ACTION = "mkdir output\n{} -O binary output/$TARGET output/{}.bin\n{} -O ihex output/$TARGET output/{}.hex\n{} $TARGET \n".format(
-        OBJCPY, PROJECT_NAME, OBJCPY, PROJECT_NAME, SIZE
+    POST_ACTION = '''mkdir -p output\nmv {}.elf output\n{} -O binary output/{}.elf output/{}.bin\n{} -O ihex output/{}.elf output/{}.hex\n{} output/{}.elf \n'''.format(
+        PROJECT_NAME,OBJCPY, PROJECT_NAME,PROJECT_NAME, OBJCPY, PROJECT_NAME,PROJECT_NAME, SIZE,PROJECT_NAME
     )
 
 elif PLATFORM == "armcc":
