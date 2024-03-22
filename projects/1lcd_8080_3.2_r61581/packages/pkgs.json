@@ -1,0 +1,12 @@
+[
+ {
+  "name": "PERF_COUNTER",
+  "path": "/packages/system/perf_counter",
+  "ver": "v2.2.4.1"
+ },
+ {
+  "name": "RTDUINO",
+  "path": "/packages/arduino/RTduino",
+  "ver": "latest"
+ }
+]
