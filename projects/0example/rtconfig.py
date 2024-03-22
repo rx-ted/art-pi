@@ -64,7 +64,8 @@ if PLATFORM == "gcc":
         CFLAGS += " -O2"
 
     CXXFLAGS = CFLAGS
-    CFLAGS += " -std=c99"
+    # CFLAGS += " -std=c99"
+    # CXXFLAGS += " -std=c++11"
 
     POST_ACTION = '''mkdir -p output\nmv {}.elf output\n{} -O binary output/{}.elf output/{}.bin\n{} -O ihex output/{}.elf output/{}.hex\n{} output/{}.elf \n'''.format(
         PROJECT_NAME,OBJCPY, PROJECT_NAME,PROJECT_NAME, OBJCPY, PROJECT_NAME,PROJECT_NAME, SIZE,PROJECT_NAME

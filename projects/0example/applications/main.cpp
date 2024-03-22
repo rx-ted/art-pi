@@ -42,6 +42,11 @@ void blink(int argc, char *argv[])
 }
 
 MSH_CMD_EXPORT(blink, "blink 1 10 => 1 second, loop to 10");
+
+
+
+
+
 int main(void)
 {
     return RT_EOK;
