@@ -5,50 +5,52 @@
  *
  * Change Logs:
  * Date           Author       Notes
- * 2024-03-17     rx-ted        example 
+ * 2024-03-17     rx-ted        example
  * 2020-09-02     RT-Thread    first version
  */
-
+#include "font_fixedsys_mono_16.h"
 #include <rtthread.h>
 #include <rtdevice.h>
 #include "drv_common.h"
-
 #include <string>
+// #include <Arduino.h>
+// #include "lcd.h"
+#include "pins.h"
+#include "drv_tft.h"
 
-#define LED_PIN GET_PIN(I, 8)
+#define BLACK 0x0000
+#define BLUE 0x001F
+#define RED 0xF800
+#define GREEN 0x07E0
+#define CYAN 0x07FF
+#define MAGENTA 0xF81F
+#define YELLOW 0xFFE0
+#define WHITE 0xFFFF
 
-int blink_demo(float second, int times)
-{
-    rt_pin_mode(LED_PIN, PIN_MODE_OUTPUT);
-    rt_uint32_t count = 0;
-    while (count < times)
-    {
-        rt_thread_mdelay(second * 1000);
-        rt_pin_write(LED_PIN, PIN_HIGH);
-        rt_thread_mdelay(second * 1000);
-        rt_pin_write(LED_PIN, PIN_LOW);
-        count++;
-    }
-    return RT_EOK;
-}
+uint8_t LCD_RESET = A4; // Can alternately just connect to Arduino's reset pin
+uint8_t LCD_CS = A3;    // Chip Select goes to Analog 3
+uint8_t LCD_CD = A2;    // Command/Data goes to Analog 2
+uint8_t LCD_WR = A1;    // LCD Write goes to Analog 1
+uint8_t LCD_RD = A0;    // LCD Read goes to Analog 0
 
-void blink(int argc, char *argv[])
-{
-    if (argc > 2)
-    {
-        rt_kprintf("%s second and %s times to blink\n", argv[1], argv[2]);
-        blink_demo(std::stof(argv[1]), std::stof(argv[2]));
-    }
-}
-
-MSH_CMD_EXPORT(blink, "blink 1 10 => 1 second, loop to 10");
-
-
-
-
+rt_base_t d8[8] = {D0, D1, D2, D3, D4, D5, D6, D7};
+// TFTLCD tft = TFTLCD(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET, 240, 320, d8);
 
 int main(void)
 {
+    rt_kprintf("Hello~");
+    struct rt_tft_mcu_t *mcu;
+    // mcu->rd = LCD_RD;
+    // mcu->wr = LCD_WR;
+    // mcu->cs = LCD_CS;
+    // mcu->dc = LCD_CD;
+    // mcu->rst = LCD_RESET;
+    // for (uint8_t i = 0; i < 8; i++)
+    // {
+    //     mcu->d8[i] = d8[i];
+    // }
+    drv_tft lcd = drv_tft(mcu);
+
     return RT_EOK;
 }
 

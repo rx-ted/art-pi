@@ -82,6 +82,7 @@
 
 #define RT_USING_DFS
 #define DFS_USING_POSIX
+#define DFS_USING_WORKDIR
 #define DFS_FD_MAX 16
 #define RT_USING_DFS_V1
 #define DFS_FILESYSTEMS_MAX 4
@@ -248,10 +249,6 @@
 
 /* Arduino libraries */
 
-#define PKG_USING_RTDUINO
-#define RTDUINO_NO_SETUP_LOOP
-#define RTDUINO_SUPPORT_HIGH_PRECISION_MICROS
-#define PKG_USING_RTDUINO_LATEST_VERSION
 
 /* Projects and Demos */
 
