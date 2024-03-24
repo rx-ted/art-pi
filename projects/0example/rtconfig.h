@@ -248,10 +248,6 @@
 
 /* Arduino libraries */
 
-#define PKG_USING_RTDUINO
-#define RTDUINO_NO_SETUP_LOOP
-#define RTDUINO_SUPPORT_HIGH_PRECISION_MICROS
-#define PKG_USING_RTDUINO_LATEST_VERSION
 
 /* Projects and Demos */
 
