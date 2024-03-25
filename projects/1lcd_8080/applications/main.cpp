@@ -5,50 +5,28 @@
  *
  * Change Logs:
  * Date           Author       Notes
- * 2024-03-17     rx-ted        example 
+ * 2024-03-17     rx-ted        example
  * 2020-09-02     RT-Thread    first version
  */
 
 #include <rtthread.h>
 #include <rtdevice.h>
 #include "drv_common.h"
-
+#include "drv_tft.h"
 #include <string>
 
-#define LED_PIN GET_PIN(I, 8)
-
-int blink_demo(float second, int times)
-{
-    rt_pin_mode(LED_PIN, PIN_MODE_OUTPUT);
-    rt_uint32_t count = 0;
-    while (count < times)
-    {
-        rt_thread_mdelay(second * 1000);
-        rt_pin_write(LED_PIN, PIN_HIGH);
-        rt_thread_mdelay(second * 1000);
-        rt_pin_write(LED_PIN, PIN_LOW);
-        count++;
-    }
-    return RT_EOK;
-}
-
-void blink(int argc, char *argv[])
-{
-    if (argc > 2)
-    {
-        rt_kprintf("%s second and %s times to blink\n", argv[1], argv[2]);
-        blink_demo(std::stof(argv[1]), std::stof(argv[2]));
-    }
-}
-
-MSH_CMD_EXPORT(blink, "blink 1 10 => 1 second, loop to 10");
-
-
-
-
-
+drv_tft tft = drv_tft();
 int main(void)
 {
+    tft.begin();
+    tft.fillScreen(0xff00);
+
+    while (1)
+    {
+        tft.reset();
+        rt_thread_mdelay(100);
+    }
+
     return RT_EOK;
 }
 
