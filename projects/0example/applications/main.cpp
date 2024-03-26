@@ -5,7 +5,7 @@
  *
  * Change Logs:
  * Date           Author       Notes
- * 2024-03-17     rx-ted        example 
+ * 2024-03-17     rx-ted        example
  * 2020-09-02     RT-Thread    first version
  */
 
@@ -43,12 +43,13 @@ void blink(int argc, char *argv[])
 
 MSH_CMD_EXPORT(blink, "blink 1 10 => 1 second, loop to 10");
 
-
-
-
-
 int main(void)
 {
+    rt_kprintf("blink demo usage:\n");
+    rt_kprintf("e.g. blink 1 10  =>  the led blink swtich 1 second in 10 times.\n");
+    blink_demo(1.0, 10);
+    rt_kprintf("e.g. blink 0.1 20  =>  the led blink swtich 0.1 second in 20 times.\n");
+    blink_demo(0.1, 20);
     return RT_EOK;
 }
 
