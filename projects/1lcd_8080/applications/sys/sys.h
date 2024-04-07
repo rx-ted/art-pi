@@ -18,6 +18,8 @@ typedef uint8_t byte;
 
 #define LOW PIN_LOW
 #define HIGH PIN_HIGH
+// #define LOW PIN_HIGH
+// #define HIGH PIN_LOW
 
 #define INPUT PIN_MODE_INPUT
 #define OUTPUT PIN_MODE_OUTPUT

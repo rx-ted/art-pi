@@ -465,6 +465,7 @@ void TFTLCD::_plot_line_high(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1,
         y++;
     }
 }
+
 void TFTLCD::set_area_window(uint16_t color, uint32_t len)
 {
     uint16_t blocks = (uint16_t)(len / 64); // 64 pixels/block
