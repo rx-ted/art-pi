@@ -8,7 +8,8 @@
 #include <rtdevice.h>
 #include "sys.h"
 #include "rtdbg.h"
-#include <map>
+#include <vector>
+
 
 // 8 parallel
 struct tft_8_parallel_t

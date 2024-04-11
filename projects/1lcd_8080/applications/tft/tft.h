@@ -20,7 +20,7 @@ swap_coord(T &a, T &b)
 class TFT
 {
 private:
-        int8_t init();
+        int8_t _init();
         boolean active = false;
         uint8_t _mode = 0xff;
         uint8_t _rotation = 0;
@@ -34,46 +34,16 @@ private:
         void activeDrive(uint8_t id);
         inline uint8_t read8();
         inline void write8(uint8_t data);
-        inline void set8pMode(uint8_t mode);
         inline void writeCommand(uint8_t cmd);
         inline void writeCommand16(uint16_t cmd);
         inline void writeData(uint8_t data);
-        inline void writeData(uint8_t *data, uint32_t len);
         inline void writeData16(uint16_t data);
+        inline void writeReg(std::vector<std::vector<uint8_t>> reg); /*reg[0][i] -> i=0:command, i=1:length, i>1:null or data */
 
 public:
         TFT(struct tft_mcu_t mcu);
         ~TFT();
-        /* pin  status*/
-        void CS_ACTIVE() { digitalWrite(_cs, LOW); }
-        void CS_IDLE() { digitalWrite(_cs, HIGH); }
-        void DC_CMD() { digitalWrite(_dc, LOW); }
-        void DC_DAT() { digitalWrite(_dc, HIGH); }
-        void WR_ACTIVE() { digitalWrite(_wr, LOW); }
-        void WR_IDLE() { digitalWrite(_wr, HIGH); }
-        void RD_ACTIVE() { digitalWrite(_rd, LOW); }
-        void RD_IDLE() { digitalWrite(_rd, HIGH); }
-        void RST_ACTIVE() { digitalWrite(_rst, LOW); }
-        void RST_IDLE() { digitalWrite(_rst, HIGH); }
-        void WR_STROBE()
-        {
-                WR_ACTIVE();
-                WR_IDLE();
-        }
-        void DATA_P8_STATUS(uint8_t val)
-        {
-                digitalWrite(_d0, val);
-                digitalWrite(_d1, val);
-                digitalWrite(_d2, val);
-                digitalWrite(_d3, val);
-                digitalWrite(_d4, val);
-                digitalWrite(_d5, val);
-                digitalWrite(_d6, val);
-                digitalWrite(_d7, val);
-        }
-
-        uint8_t pinInitialize();
-        uint8_t pinReadALl();
+        uint8_t getCurrentPinStatus();
 
         int8_t begin();
         int8_t destory();
@@ -111,5 +81,72 @@ public:
         void plot_line_low(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t width, uint16_t color);
         void plot_line_high(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t width, uint16_t color);
 };
+
+/* pin  status*/
+#define CONTROL_8080(val)           \
+        {                           \
+                pinMode(_cs, val);  \
+                pinMode(_wr, val);  \
+                pinMode(_rd, val);  \
+                pinMode(_dc, val);  \
+                pinMode(_rst, val); \
+        }
+#define SET_8P_MODE(val)              \
+        {                             \
+                pinMode(_p8[0], val); \
+                pinMode(_p8[1], val); \
+                pinMode(_p8[2], val); \
+                pinMode(_p8[3], val); \
+                pinMode(_p8[4], val); \
+                pinMode(_p8[5], val); \
+                pinMode(_p8[6], val); \
+                pinMode(_p8[7], val); \
+        }
+#define DATA_P8_WRITE(val)                               \
+        {                                                \
+                digitalWrite(_p8[0], (val >> 0) & 0x01); \
+                digitalWrite(_p8[1], (val >> 1) & 0x01); \
+                digitalWrite(_p8[2], (val >> 2) & 0x01); \
+                digitalWrite(_p8[3], (val >> 3) & 0x01); \
+                digitalWrite(_p8[4], (val >> 4) & 0x01); \
+                digitalWrite(_p8[5], (val >> 5) & 0x01); \
+                digitalWrite(_p8[6], (val >> 6) & 0x01); \
+                digitalWrite(_p8[7], (val >> 7) & 0x01); \
+        }
+#define DATA_P8_READ()                          \
+        result =                                \
+            (digitalRead(_p8[0]) & 0x01) << 0 | \
+            (digitalRead(_p8[1]) & 0x01) << 1 | \
+            (digitalRead(_p8[2]) & 0x01) << 2 | \
+            (digitalRead(_p8[3]) & 0x01) << 3 | \
+            (digitalRead(_p8[4]) & 0x01) << 4 | \
+            (digitalRead(_p8[5]) & 0x01) << 5 | \
+            (digitalRead(_p8[6]) & 0x01) << 6 | \
+            (digitalRead(_p8[7]) & 0x01) << 7;
+
+#define CS_ACTIVE() digitalWrite(_cs, LOW);
+#define CS_IDLE() digitalWrite(_cs, HIGH);
+#define DC_CMD() digitalWrite(_dc, LOW);
+#define DC_DAT() digitalWrite(_dc, HIGH);
+#define WR_ACTIVE() digitalWrite(_wr, LOW);
+#define WR_IDLE() digitalWrite(_wr, HIGH);
+#define RD_ACTIVE() digitalWrite(_rd, LOW);
+#define RD_IDLE() digitalWrite(_rd, HIGH);
+#define WR_STROBE()          \
+        {                    \
+                WR_ACTIVE(); \
+                WR_IDLE();   \
+        }
+#define RST_ACTIVE() digitalWrite(_rst, LOW);
+#define RST_IDLE() digitalWrite(_rst, HIGH);
+
+#define CONTROL_8080_INITIALIZE \
+        {                       \
+                CS_IDLE();      \
+                DC_DAT();       \
+                WR_IDLE();      \
+                RD_IDLE();      \
+                RST_IDLE();     \
+        }
 
 #endif // TFT_LIBRARY

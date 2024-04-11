@@ -63,6 +63,29 @@ void setNum(int n)
     num = &n;
 }
 
+void getNum1(int *a)
+{
+    printf("a:%d\n", *a);
+    int b = *a;
+    printf("a:%d b:%d\n", *a, b);
+    b = 100;
+    printf("a:%d b:%d\n", *a, b);
+    a = &b;
+    printf("a:%d b:%d\n", *a, b);
+}
+
+void getNum2(int a)
+{
+    printf("a:%d\n", a);
+    int *b = &a;
+    printf("a:%d b:%d\n", a, *b);
+    *b = 100;
+    printf("a:%d b:%d\n", a, *b);
+    a = *b;
+    printf("a:%d b:%d\n", a, *b);
+}
+
+
 int main()
 {
     char *a = "hello";
@@ -82,6 +105,11 @@ int main()
     printf("num -> %d %d %d\n", *num, num1, getNum());
     setNum(4);
     printf("num -> %d %d %d\n", *num, num1, getNum());
+    int num2 = 0;
+    getNum1(&num2);
+    printf("num2:%d \n", num2);
+    getNum2(num2);
+    printf("num2:%d \n", num2);
 
     return 0;
 }

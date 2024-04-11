@@ -20,55 +20,81 @@
 
 int main(void)
 {
-
-    test_tft();
-}
-
-void lcd_demo1()
-{
-    char *name = (char *)"ili9341";
-    tft_8_parallel_t p8 = {
-        D0, D1, D2, D3, D4, D5, D6, D7};
-    tft_mcu_t mcu = {
-        name, 240, 320, A0, A1, A2, A3, A4, p8};
-    TFT tft = TFT(mcu);
-    tft.begin();
-    tft.fillScreen(RED);
-    tft.fillScreen(GREEN);
-    tft.fillScreen(BLUE);
-    tft.fillScreen(YELLOW);
-    delay(100);
-    tft.fillScreen(WHITE);
-    tft.setRotation(0);
-    tft.fillScreen(PURPLE);
-    delay(300);
-    rt_kprintf("Using TFT, id is %x\n", tft.getDriverId());
-    tft.destory();
-}
-MSH_CMD_EXPORT(lcd_demo1, "ili9341 tft demo");
-
-void lcd_demo2()
-{
+    // test_tft();
     char *name = (char *)"r61581";
     tft_8_parallel_t p8 = {
         D0, D1, D2, D3, D4, D5, D6, D7};
     tft_mcu_t mcu = {
-        name, 240, 320, A0, A1, A2, A3, A4, p8};
+        name, 320, 480, A0, A1, A2, A3, A4, p8};
     TFT tft = TFT(mcu);
     tft.begin();
-    tft.fillScreen(RED);
-    tft.fillScreen(GREEN);
-    tft.fillScreen(BLUE);
-    tft.fillScreen(YELLOW);
-    delay(100);
-    tft.fillScreen(WHITE);
-    tft.setRotation(0);
-    tft.fillScreen(PURPLE);
-    delay(300);
     rt_kprintf("Using TFT, id is %x\n", tft.getDriverId());
-    tft.destory();
+
+    while (1)
+    {
+        tft.setRotation(0);
+        rt_kprintf("w: %d \t h: %d\n", tft.getWidth(), tft.getHeight());
+        tft.fillScreen(BLUE);
+        delay(100);
+        tft.setRotation(1);
+        rt_kprintf("w: %d \t h: %d\n", tft.getWidth(), tft.getHeight());
+        tft.fillScreen(YELLOW);
+        delay(100);
+        tft.setRotation(2);
+        rt_kprintf("w: %d \t h: %d\n", tft.getWidth(), tft.getHeight());
+        tft.fillScreen(GREEN);
+        delay(100);
+        tft.setRotation(3);
+        rt_kprintf("w: %d \t h: %d\n", tft.getWidth(), tft.getHeight());
+        tft.fillScreen(RED);
+        delay(100);
+    }
 }
-MSH_CMD_EXPORT(lcd_demo2, "r61581 tft demo");
+
+// void lcd_demo1()
+// {
+//     char *name = (char *)"ili9341";
+//     tft_8_parallel_t p8 = {
+//         D0, D1, D2, D3, D4, D5, D6, D7};
+//     tft_mcu_t mcu = {
+//         name, 240, 320, A0, A1, A2, A3, A4, p8};
+//     TFT tft = TFT(mcu);
+//     tft.begin();
+//     tft.fillScreen(RED);
+//     tft.fillScreen(GREEN);
+//     tft.fillScreen(BLUE);
+//     tft.fillScreen(YELLOW);
+//     delay(100);
+//     tft.fillScreen(WHITE);
+//     tft.fillScreen(PURPLE);
+//     delay(300);
+//     rt_kprintf("Using TFT, id is %x\n", tft.getDriverId());
+//     tft.destory();
+// }
+// MSH_CMD_EXPORT(lcd_demo1, "ili9341 tft demo");
+
+// void lcd_demo2()
+// {
+//     char *name = (char *)"r61581";
+//     tft_8_parallel_t p8 = {
+//         D0, D1, D2, D3, D4, D5, D6, D7};
+//     tft_mcu_t mcu = {
+//         name, 320, 480, A0, A1, A2, A3, A4, p8};
+//     TFT tft = TFT(mcu);
+//     tft.begin();
+//     tft.fillScreen(RED);
+//     tft.fillScreen(GREEN);
+//     tft.fillScreen(BLUE);
+//     tft.fillScreen(YELLOW);
+//     delay(100);
+//     tft.fillScreen(WHITE);
+//     tft.setRotation(0);
+//     tft.fillScreen(PURPLE);
+//     delay(300);
+//     rt_kprintf("Using TFT, id is %x\n", tft.getDriverId());
+//     tft.destory();
+// }
+// MSH_CMD_EXPORT(lcd_demo2, "r61581 tft demo");
 
 #include "stm32h7xx.h"
 #include <stm32h750xx.h>

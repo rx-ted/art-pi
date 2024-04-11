@@ -1,6 +1,7 @@
 #include <tft_test.h>
 #include <sys.h>
 #include <unity.h>
+#include "tft.h"
 
 void TFT_MATCH_DRIVER_NAME_ID_PINOUT()
 {
@@ -22,10 +23,6 @@ void TFT_MATCH_DRIVER_NAME_ID_PINOUT()
     TEST_ASSERT_EQUAL(240, tft.getWidth());
     tft.setRotation(1);
     TEST_ASSERT_EQUAL(320, tft.getWidth());
-    tft.RST_ACTIVE();
-    TEST_ASSERT_EQUAL(LOW, digitalRead(A4));
-    tft.RST_IDLE();
-    TEST_ASSERT_EQUAL(HIGH, digitalRead(A4));
 }
 
 void test_tft()
