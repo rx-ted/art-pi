@@ -1,0 +1,12 @@
+import rtconfig,os
+from building import *
+
+cwd  = GetCurrentDir()
+path = [cwd]
+src  = Glob('*.c')
+src  += Glob('*.cpp')
+
+group = DefineGroup('STATIC_LIBRARY', src, depend = [''], CPPPATH = path)
+
+
+Return('group')
