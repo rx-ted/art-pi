@@ -110,7 +110,6 @@
 
 /* Using USB */
 
-
 /* C/C++ and POSIX layer */
 
 /* ISO-ANSI C layer */
@@ -134,7 +133,6 @@
 
 /* Interprocess Communication (IPC) */
 
-
 /* Socket is in the 'Network' category */
 
 #define RT_USING_CPLUSPLUS
@@ -142,51 +140,37 @@
 
 /* Network */
 
-
 /* Memory protection */
-
 
 /* Utilities */
 
-
 /* RT-Thread Utestcases */
-
 
 /* RT-Thread online packages */
 
 /* IoT - internet of things */
 
-
 /* Wi-Fi */
 
 /* Marvell WiFi */
 
-
 /* Wiced WiFi */
-
 
 /* CYW43012 WiFi */
 
-
 /* BL808 WiFi */
-
 
 /* CYW43439 WiFi */
 
-
 /* IoT Cloud */
 
-
 /* security packages */
-
 
 /* language packages */
 
 /* JSON: JavaScript Object Notation, a lightweight data-interchange format */
 
-
 /* XML: Extensible Markup Language */
-
 
 /* multimedia packages */
 
@@ -202,20 +186,15 @@
 
 /* u8g2: a monochrome graphic library */
 
-
 /* tools packages */
-
 
 /* system packages */
 
 /* enhanced kernel services */
 
-
 /* acceleration: Assembly language or algorithmic acceleration packages */
 
-
 /* CMSIS: ARM Cortex-M Microcontroller Software Interface Standard */
-
 
 /* Micrium: Micrium software products porting for RT-Thread */
 
@@ -228,21 +207,15 @@
 
 /* STM32 HAL & SDK Drivers */
 
-
 /* Kendryte SDK */
-
 
 /* sensors drivers */
 
-
 /* touch drivers */
-
 
 /* AI packages */
 
-
 /* Signal Processing and Control Algorithm Packages */
-
 
 /* miscellaneous packages */
 
@@ -250,41 +223,29 @@
 
 /* samples: kernel and components samples */
 
-
 /* entertainment: terminal games and other interesting software packages */
-
 
 /* Arduino libraries */
 
-
 /* Projects and Demos */
-
 
 /* Sensors */
 
-
 /* Display */
-
 
 /* Timing */
 
-
 /* Data Processing */
-
 
 /* Data Storage */
 
 /* Communication */
 
-
 /* Device Control */
-
 
 /* Other */
 
-
 /* Signal IO */
-
 
 /* Uncategorized */
 
@@ -294,7 +255,6 @@
 #define SOC_SERIES_STM32H7
 
 /* Board extended module */
-
 
 /* Onboard Peripheral */
 
@@ -312,5 +272,6 @@
 
 #define FIRMWARE_EXEC_USING_QSPI_FLASH
 #define RT_STUDIO_BUILT_IN
+#define DRIVER_USING_R61581
 
 #endif
