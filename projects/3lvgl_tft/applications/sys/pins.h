@@ -7,8 +7,8 @@
  * Date           Author       Notes
  * 2024-02-19     rx-ted       the first version
  */
-#ifndef APPLICATIONS_SYS_PINS_H_
-#define APPLICATIONS_SYS_PINS_H_
+#ifndef __SYS_PINS_H__
+#define __SYS_PINS_H__
 
 #include "drv_gpio.h"
 
@@ -48,4 +48,4 @@
 #define A4 GET_PIN(D, 3)
 #endif
 
-#endif /* APPLICATIONS_SYS_PINS_H_ */
+#endif /* __SYS_PINS_H__ */

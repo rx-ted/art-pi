@@ -1,60 +1,54 @@
 #include "tft.h"
-#include "registers.h"
 #include <itoa.h>
-#include <driver/public.h>
-#include "driver/r61581.h"
+#include <driver.h>
+#include <config.h>
 
-#define MSG
-
-TFT::TFT(struct tft_mcu_t mcu)
+TFT tft;
+TFT::TFT()
 {
-    tft_device.mcu = mcu;
     _width = TFT_WIDTH;
     _height = TFT_HEIGHT;
-    _rotation = 0;
-    _cs = tft_device.mcu.cs;
-    _rd = tft_device.mcu.rd;
-    _wr = tft_device.mcu.wr;
-    _dc = tft_device.mcu.dc;
-    _rst = tft_device.mcu.rst;
-    _p8[0] = tft_device.mcu.p8.p0;
-    _p8[1] = tft_device.mcu.p8.p1;
-    _p8[2] = tft_device.mcu.p8.p2;
-    _p8[3] = tft_device.mcu.p8.p3;
-    _p8[4] = tft_device.mcu.p8.p4;
-    _p8[5] = tft_device.mcu.p8.p5;
-    _p8[6] = tft_device.mcu.p8.p6;
-    _p8[7] = tft_device.mcu.p8.p7;
+    _rotation = TFT_ROTATION;
+    _rd = tft_driver.tft_control_8080.rd;
+    _wr = tft_driver.tft_control_8080.wr;
+    _dc = tft_driver.tft_control_8080.dc;
+    _cs = tft_driver.tft_control_8080.cs;
+    _rst = tft_driver.tft_control_8080.rst;
+    _p8[0] = tft_driver.tft_8_parallel.p0;
+    _p8[1] = tft_driver.tft_8_parallel.p1;
+    _p8[2] = tft_driver.tft_8_parallel.p2;
+    _p8[3] = tft_driver.tft_8_parallel.p3;
+    _p8[4] = tft_driver.tft_8_parallel.p4;
+    _p8[5] = tft_driver.tft_8_parallel.p5;
+    _p8[6] = tft_driver.tft_8_parallel.p6;
+    _p8[7] = tft_driver.tft_8_parallel.p7;
 }
 
 TFT::~TFT()
 {
+    delete &tft;
 }
 int8_t TFT::destory()
 {
     return 0;
 }
 
-int8_t TFT::begin()
+int8_t TFT::begin(String name)
 {
-    _init();
-    return ERR_OK;
+    _init(name);
+    return RT_EOK;
 }
 
-int8_t TFT::_init()
+int8_t TFT::_init(String name)
 {
-    delay(500);
+    _driver_name.operator=(name);
+    delay(100);
     CONTROL_8080(OUTPUT);
     SET_8P_MODE(OUTPUT);
     CONTROL_8080_INITIALIZE;
     DATA_P8_WRITE(0XFF);
-    tft_device.driver_id = _findDeviceName(tft_device.mcu.name);
-    if (tft_device.driver_id == 0xff)
-    {
-        LOG_E("%s: %s is not found id:%x.\n", TFT_NAME, tft_device.driver_id);
-        return ERR_NOT_FIND_DEVICE;
-    }
-    activeDrive(tft_device.driver_id);
+    _driver_id = findDriverName(_driver_name.c_str()); // if has new driver pls open to add here.
+    writeRegs();
     return RT_EOK;
 }
 
@@ -63,16 +57,12 @@ uint8_t TFT::getCurrentPinStatus()
     return read8();
 }
 
-inline void TFT::writeReg(std::vector<std::vector<uint8_t>> reg)
+void TFT::writeReg(uint8_t *reg, uint8_t len)
 {
-
-    for (size_t i = 0; i < reg.size(); i++)
+    writeCommand(reg[0]);
+    for (size_t i = 1; i < len; i++)
     {
-        writeCommand(reg[i][0]);
-        for (size_t j = 1; j < reg[i].size(); j++)
-        {
-            writeData(reg[i][j]);
-        }
+        writeData(reg[i]);
     }
 }
 
@@ -120,73 +110,14 @@ inline uint8_t TFT::read8()
     return result;
 }
 
-uint8_t TFT::_findDeviceName(char *name)
-{
-    char *tmp = toLowerCase(name);
-    if (tmp == NULL)
-    {
-        return ERR_NOT_VALUE;
-    }
-    if (equal(tmp, (char *)"ili9341"))
-    {
-        return 0x01;
-    }
-    else if (equal(tmp, (char *)"r61581"))
-    {
-        return 0x02;
-    }
-    // if you have more driver, can add here.
-    return 0xff;
-}
-
-void TFT::activeDrive(uint8_t id)
-{
-    switch (id)
-    {
-    case 1: // ili9341
-        // writeCommand(ILI9341_SOFTRESET);
-        // writeData(0);
-        // delay(50);
-        // writeCommand(ILI9341_DISPLAYOFF);
-        // writeData(0);
-        // writeCommand(ILI9341_POWERCONTROL1);
-        // writeData(0x23);
-        // writeCommand(ILI9341_POWERCONTROL2);
-        // writeData(0x12);
-        // writeCommand(ILI9341_VCOMCONTROL1);
-        // writeData16(0x2B2B);
-        // writeCommand(ILI9341_VCOMCONTROL2);
-        // writeData(0xC0);
-        // writeCommand(ILI9341_MEMCONTROL);
-        // writeData(ILI9341_MADCTL_MY | ILI9341_MADCTL_BGR);
-        // writeCommand(ILI9341_PIXELFORMAT);
-        // writeData(0x55);
-        // writeCommand(ILI9341_FRAMECONTROL);
-        // writeData16(0x001B);
-        // writeCommand(ILI9341_ENTRYMODE);
-        // writeData(0x07);
-        // writeCommand(ILI9341_SLEEPOUT);
-        // writeData(0);
-        // delay(150);
-        // writeCommand(ILI9341_DISPLAYON);
-        // writeData(0);
-        // setRotation(_rotation);
-        break;
-    case 2:
-#define TFT_USING_R61581
-        writeReg(reg);
-        break;
-        // TODO(Ben)
-    }
-}
 uint8_t TFT::findDriverId()
 {
-    return tft_device.driver_id;
+    return _driver_id;
 }
 
 char *TFT::getDriverName()
 {
-    return tft_device.mcu.name;
+    return _driver_name.c_str();
 }
 
 uint16_t TFT::getHeight()
@@ -222,7 +153,26 @@ void TFT::fillScreen(uint16_t color)
     setAddrWindow(0, 0, _width - 1, _height - 1);
     setAreaWindow(color, (uint32_t)_width * _height);
 }
+void TFT::fillArray(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t *color_p)
+{
+    setAddrWindow(x1, y1, x2, y2);
+    setAreaWindow(color_p, (uint32_t)(x2 - x1 + 1) * (y2 - y1 + 1));
+}
 
+void TFT::fillArray(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color)
+{
+    setAddrWindow(x1, y1, x2, y2);
+    setAreaWindow(color, (uint32_t)(x2 - x1 + 1) * (y2 - y1 + 1));
+}
+
+void TFT::setAreaWindow(uint16_t *color, uint32_t len)
+{
+    while (len--)
+    {
+        writeData16(*color);
+        color++;
+    }
+}
 void TFT::setAreaWindow(uint16_t color, uint32_t len)
 {
     uint16_t blocks = (uint16_t)(len / 64); // 64 pixels/block

@@ -1,31 +1,26 @@
-#ifndef _TFT_LIBRARY_H_
-#define _TFT_LIBRARY_H_
+#ifndef __TFT_H__
+#define __TFT_H__
 
-#include "config.h"
+#include <sys.h>
+#include <driver/public.h>
+#include <WString.h>
 
-#define TFT_NAME "TFT"
+#define LOG_TAG "TFT"
+#include <drv_log.h>
 
-// global tft device
 static struct tft_device_t tft_device;
-/* Basic operations */
-template <typename T>
-static inline void
-swap_coord(T &a, T &b)
-{
-        T t = a;
-        a = b;
-        b = t;
-}
 
 class TFT
 {
 private:
-        int8_t _init();
-        boolean active = false;
+        int8_t _init(String name);
+        bool active = false;
         uint8_t _mode = 0xff;
         uint8_t _rotation = 0;
         uint16_t _width;
         uint16_t _height;
+        int8_t _driver_id;
+        String _driver_name;
 
         rt_base_t _cs, _rd, _wr, _dc, _rst, _d0, _d1, _d2, _d3, _d4, _d5, _d6, _d7;
         rt_base_t _p8[8];
@@ -38,16 +33,15 @@ private:
         inline void writeCommand16(uint16_t cmd);
         inline void writeData(uint8_t data);
         inline void writeData16(uint16_t data);
-        inline void writeReg(std::vector<std::vector<uint8_t>> reg); /*reg[0][i] -> i=0:command, i=1:length, i>1:null or data */
 
 public:
-        TFT(struct tft_mcu_t mcu);
+        TFT(); // add the parameter can be 8080 pinout, spi, i2c
         ~TFT();
         uint8_t getCurrentPinStatus();
 
-        int8_t begin();
+        int8_t begin(String name);
         int8_t destory();
-
+        void writeReg(uint8_t *reg, uint8_t len);
         uint8_t findDriverId();
 
         char *getDriverName();
@@ -59,10 +53,11 @@ public:
         // void setAddrWindow(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
         void setAddrWindow(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
         void setAreaWindow(uint16_t color, uint32_t len);
+        void setAreaWindow(uint16_t *color, uint32_t len);
 
         void fillScreen(uint16_t color);
-
-        // void pushBlock16(uint16_t color, uint32_t len);
+        void fillArray(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t *color);
+        void fillArray(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
 
         void drawPixel(int16_t x, int16_t y, uint16_t color);
         void drawFastVLine(int16_t x, int16_t y, uint16_t h, uint16_t color);
@@ -149,4 +144,4 @@ public:
                 RST_IDLE();     \
         }
 
-#endif // TFT_LIBRARY
+#endif // __TFT_H__

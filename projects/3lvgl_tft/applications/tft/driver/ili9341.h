@@ -1,6 +1,9 @@
+#ifndef __ILI9341_H__
+#define __ILI9341_H__
+#include "config.h"
 
+#ifdef DRIVER_USING_ILI9341
 #include "rtdef.h"
-#include <vector>
 
 #define TFT_WIDTH 240
 #define TFT_HEIGHT 320
@@ -39,35 +42,11 @@
 #define ILI9341_MADCTL_BGR 0x08
 #define ILI9341_MADCTL_MH 0x04
 
-std::vector<std::vector<uint8_t>> reg = {{}};
 
-uint8_t getRotation(uint8_t rotation, uint16_t *_width, uint16_t *_height)
-{
-    uint8_t t;
-    uint16_t w = *_width;
-    uint16_t h = *_height;
-    switch (rotation)
-    {
-    case 2:
-        t = ILI9341_MADCTL_MX | ILI9341_MADCTL_BGR;
-        _width = &w;
-        _height = &h;
-        break;
-    case 3:
-        t = ILI9341_MADCTL_MV | ILI9341_MADCTL_BGR;
-        _width = &h;
-        _height = &w;
-        break;
-    case 0:
-        t = ILI9341_MADCTL_MY | ILI9341_MADCTL_BGR;
-        _width = &w;
-        _height = &h;
-        break;
-    case 1:
-        t = ILI9341_MADCTL_MX | ILI9341_MADCTL_MY | ILI9341_MADCTL_MV | ILI9341_MADCTL_BGR;
-        _width = &h;
-        _height = &w;
-        break;
-    }
-    return t;
-}
+uint8_t ili9341Rotation(uint8_t rotation, uint16_t &_width, uint16_t _height);
+void ili9341WriteRegs();
+
+
+
+#endif
+#endif
