@@ -1,0 +1,25 @@
+import rtconfig, os
+from building import *
+
+cwd = GetCurrentDir()
+path = [cwd]
+src = Glob("*.c")
+src += Glob("*.cpp")
+
+group = []
+
+list = os.listdir(cwd)
+
+
+def isFile(path):
+    if os.path.isdir:
+        isFile()
+
+
+for item in list:
+
+    if os.path.isfile(os.path.join(cwd, item, "SConscript")):
+        group = group + SConscript(os.path.join(item, "SConscript"))
+group += DefineGroup("Applications", src, depend=[""], CPPPATH=path)
+
+Return("group")
