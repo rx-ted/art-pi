@@ -248,195 +248,6 @@ void HAL_ETH_MspDeInit(ETH_HandleTypeDef* heth)
 }
 
 /**
-* @brief LPTIM MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hlptim: LPTIM handle pointer
-* @retval None
-*/
-void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
-{
-  if(hlptim->Instance==LPTIM1)
-  {
-  /* USER CODE BEGIN LPTIM1_MspInit 0 */
-
-  /* USER CODE END LPTIM1_MspInit 0 */
-    /* Peripheral clock enable */
-    __HAL_RCC_LPTIM1_CLK_ENABLE();
-  /* USER CODE BEGIN LPTIM1_MspInit 1 */
-
-  /* USER CODE END LPTIM1_MspInit 1 */
-  }
-
-}
-
-/**
-* @brief LPTIM MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hlptim: LPTIM handle pointer
-* @retval None
-*/
-void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef* hlptim)
-{
-  if(hlptim->Instance==LPTIM1)
-  {
-  /* USER CODE BEGIN LPTIM1_MspDeInit 0 */
-
-  /* USER CODE END LPTIM1_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_LPTIM1_CLK_DISABLE();
-  /* USER CODE BEGIN LPTIM1_MspDeInit 1 */
-
-  /* USER CODE END LPTIM1_MspDeInit 1 */
-  }
-
-}
-
-/**
-* @brief LTDC MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hltdc: LTDC handle pointer
-* @retval None
-*/
-void HAL_LTDC_MspInit(LTDC_HandleTypeDef* hltdc)
-{
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if(hltdc->Instance==LTDC)
-  {
-  /* USER CODE BEGIN LTDC_MspInit 0 */
-
-  /* USER CODE END LTDC_MspInit 0 */
-    /* Peripheral clock enable */
-    __HAL_RCC_LTDC_CLK_ENABLE();
-
-    __HAL_RCC_GPIOK_CLK_ENABLE();
-    __HAL_RCC_GPIOJ_CLK_ENABLE();
-    __HAL_RCC_GPIOI_CLK_ENABLE();
-    /**LTDC GPIO Configuration
-    PK5     ------> LTDC_B6
-    PK4     ------> LTDC_B5
-    PJ15     ------> LTDC_B3
-    PK6     ------> LTDC_B7
-    PK3     ------> LTDC_B4
-    PK7     ------> LTDC_DE
-    PJ14     ------> LTDC_B2
-    PJ12     ------> LTDC_B0
-    PJ13     ------> LTDC_B1
-    PI12     ------> LTDC_HSYNC
-    PI13     ------> LTDC_VSYNC
-    PI14     ------> LTDC_CLK
-    PK2     ------> LTDC_G7
-    PK0     ------> LTDC_G5
-    PK1     ------> LTDC_G6
-    PJ11     ------> LTDC_G4
-    PJ10     ------> LTDC_G3
-    PJ9     ------> LTDC_G2
-    PJ0     ------> LTDC_R1
-    PJ8     ------> LTDC_G1
-    PJ7     ------> LTDC_G0
-    PJ6     ------> LTDC_R7
-    PI15     ------> LTDC_R0
-    PJ1     ------> LTDC_R2
-    PJ5     ------> LTDC_R6
-    PJ2     ------> LTDC_R3
-    PJ3     ------> LTDC_R4
-    PJ4     ------> LTDC_R5
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_5|GPIO_PIN_4|GPIO_PIN_6|GPIO_PIN_3
-                          |GPIO_PIN_7|GPIO_PIN_2|GPIO_PIN_0|GPIO_PIN_1;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
-    HAL_GPIO_Init(GPIOK, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_15|GPIO_PIN_14|GPIO_PIN_12|GPIO_PIN_13
-                          |GPIO_PIN_11|GPIO_PIN_10|GPIO_PIN_9|GPIO_PIN_0
-                          |GPIO_PIN_8|GPIO_PIN_7|GPIO_PIN_6|GPIO_PIN_1
-                          |GPIO_PIN_5|GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_4;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
-    HAL_GPIO_Init(GPIOJ, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
-    HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN LTDC_MspInit 1 */
-
-  /* USER CODE END LTDC_MspInit 1 */
-  }
-
-}
-
-/**
-* @brief LTDC MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hltdc: LTDC handle pointer
-* @retval None
-*/
-void HAL_LTDC_MspDeInit(LTDC_HandleTypeDef* hltdc)
-{
-  if(hltdc->Instance==LTDC)
-  {
-  /* USER CODE BEGIN LTDC_MspDeInit 0 */
-
-  /* USER CODE END LTDC_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_LTDC_CLK_DISABLE();
-
-    /**LTDC GPIO Configuration
-    PK5     ------> LTDC_B6
-    PK4     ------> LTDC_B5
-    PJ15     ------> LTDC_B3
-    PK6     ------> LTDC_B7
-    PK3     ------> LTDC_B4
-    PK7     ------> LTDC_DE
-    PJ14     ------> LTDC_B2
-    PJ12     ------> LTDC_B0
-    PJ13     ------> LTDC_B1
-    PI12     ------> LTDC_HSYNC
-    PI13     ------> LTDC_VSYNC
-    PI14     ------> LTDC_CLK
-    PK2     ------> LTDC_G7
-    PK0     ------> LTDC_G5
-    PK1     ------> LTDC_G6
-    PJ11     ------> LTDC_G4
-    PJ10     ------> LTDC_G3
-    PJ9     ------> LTDC_G2
-    PJ0     ------> LTDC_R1
-    PJ8     ------> LTDC_G1
-    PJ7     ------> LTDC_G0
-    PJ6     ------> LTDC_R7
-    PI15     ------> LTDC_R0
-    PJ1     ------> LTDC_R2
-    PJ5     ------> LTDC_R6
-    PJ2     ------> LTDC_R3
-    PJ3     ------> LTDC_R4
-    PJ4     ------> LTDC_R5
-    */
-    HAL_GPIO_DeInit(GPIOK, GPIO_PIN_5|GPIO_PIN_4|GPIO_PIN_6|GPIO_PIN_3
-                          |GPIO_PIN_7|GPIO_PIN_2|GPIO_PIN_0|GPIO_PIN_1);
-
-    HAL_GPIO_DeInit(GPIOJ, GPIO_PIN_15|GPIO_PIN_14|GPIO_PIN_12|GPIO_PIN_13
-                          |GPIO_PIN_11|GPIO_PIN_10|GPIO_PIN_9|GPIO_PIN_0
-                          |GPIO_PIN_8|GPIO_PIN_7|GPIO_PIN_6|GPIO_PIN_1
-                          |GPIO_PIN_5|GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_4);
-
-    HAL_GPIO_DeInit(GPIOI, GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15);
-
-  /* USER CODE BEGIN LTDC_MspDeInit 1 */
-
-  /* USER CODE END LTDC_MspDeInit 1 */
-  }
-
-}
-
-/**
 * @brief SD MSP Initialization
 * This function configures the hardware resources used in this example
 * @param hsd: SD handle pointer
@@ -1228,7 +1039,29 @@ void HAL_SDRAM_MspDeInit(SDRAM_HandleTypeDef* hsdram){
 }
 
 /* USER CODE BEGIN 1 */
+/**
+* @brief DMA2D MSP Initialization
+* This function configures the hardware resources used in this example
+* @param hdma2d: DMA2D handle pointer
+* @retval None
+*/
+void HAL_DMA2D_MspInit(DMA2D_HandleTypeDef* hdma2d)
+{
+  if(hdma2d->Instance==DMA2D)
+  {
+  /* USER CODE BEGIN DMA2D_MspInit 0 */
 
+  /* USER CODE END DMA2D_MspInit 0 */
+    /* Peripheral clock enable */
+    __HAL_RCC_DMA2D_CLK_ENABLE();
+    /* DMA2D interrupt Init */
+    HAL_NVIC_SetPriority(DMA2D_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(DMA2D_IRQn);
+  /* USER CODE BEGIN DMA2D_MspInit 1 */
+
+  /* USER CODE END DMA2D_MspInit 1 */
+  }
+}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
