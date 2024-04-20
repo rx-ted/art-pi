@@ -306,13 +306,14 @@
 #define BSP_USING_UART
 #define BSP_USING_UART4
 #define BSP_USING_SDRAM
-#define BSP_USING_LCD
 
 /* External Libraries */
 
 #define FIRMWARE_EXEC_USING_QSPI_FLASH
-#define RT_STUDIO_BUILT_IN
+
+/* tft library */
 
 #define DRIVER_USING_R61581
+#define RT_STUDIO_BUILT_IN
 
 #endif

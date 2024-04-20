@@ -1,0 +1,8 @@
+menu "tft library"
+
+    config DRIVER_USING_R61581
+    bool "DRIVER USING R61581"
+    config DRIVER_USING_ILI9341
+    bool "DRIVER USING ILI9341"
+    
+endmenu

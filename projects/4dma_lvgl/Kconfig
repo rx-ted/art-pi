@@ -19,6 +19,7 @@ config PKGS_DIR
 source "$RTT_DIR/Kconfig"
 source "$PKGS_DIR/Kconfig"
 source "$BSP_DIR/../../libraries/Kconfig"
+source "$BSP_DIR/applications/tft/Kconfig"
 
 config RT_STUDIO_BUILT_IN
     bool
