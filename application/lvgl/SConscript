@@ -4,9 +4,10 @@ from building import *
 cwd = GetCurrentDir()
 
 src = []
+path = []
 
 if GetDepend(["PKG_USING_LVGL"]):
-    path = [cwd]
+    path += [cwd]
 
 if GetDepend(["PKG_USING_LVGL_DISP"]):
     src += Glob("lv_port_disp.cpp")

@@ -7,10 +7,10 @@ cwd = GetCurrentDir()
 src = Glob('*.c')
 src += Glob('port/*.c')
 
-# add cubemx drivers
-src += Split('''
-CubeMX_Config/Core/Src/stm32h7xx_hal_msp.c
-''')
+# # add cubemx drivers
+# src += Split('''
+# CubeMX_Config/Core/Src/stm32h7xx_hal_msp.c
+# ''')
 
 path = [cwd]
 path += [cwd + '/port']
