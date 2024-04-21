@@ -46,3 +46,4 @@ output
 __pycache__
 .config.old
 .sconsign.delite
+packages

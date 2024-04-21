@@ -1,0 +1,20 @@
+menu "lvgl configuration"
+    if PKG_USING_LVGL
+    config PKG_USING_LVGL_DISP
+    bool "In use LVGL, start up display"
+
+    config PKG_USING_LVGL_INDEV
+    bool "In use LVGL, start up touch"
+
+    config PKG_USING_LVGL_GUI
+    bool "In use LVGL, start up the example GUI"
+    
+    config PKG_USING_LVGL_DMA2D
+    bool "Use DMA2D when run LVGL"
+    
+    
+    endif
+
+    
+    
+endmenu

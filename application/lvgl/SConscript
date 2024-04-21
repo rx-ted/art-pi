@@ -1,0 +1,31 @@
+import rtconfig, os
+from building import *
+
+cwd = GetCurrentDir()
+
+src = []
+
+if GetDepend(["PKG_USING_LVGL"]):
+    path = [cwd]
+
+if GetDepend(["PKG_USING_LVGL_DISP"]):
+    src += Glob("lv_port_disp.cpp")
+
+if GetDepend(["PKG_USING_LVGL_INDEV"]):
+    src += Glob("lv_port_indev.cpp")
+
+if GetDepend(["PKG_USING_LVGL_GUI"]):
+    src += Glob("lv_port_gui.cpp")
+
+if GetDepend(["PKG_USING_LVGL_DMA2D"]):
+    path += [cwd + "/../../libraries/STM32H7xx_HAL/STM32H7xx_HAL_Driver/Inc"]
+    src += [
+        cwd
+        + "/../../libraries/STM32H7xx_HAL/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma2d.c"
+    ]
+
+
+group = DefineGroup("LVGL-TFT", src, depend=[""], CPPPATH=path)
+
+
+Return("group")

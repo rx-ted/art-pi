@@ -69,9 +69,9 @@ if GetDepend(['BSP_USING_ETH']):
     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_eth.c']
     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_eth_ex.c']
 
-#if GetDepend(['RT_USING_ADC']):
-#    src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_adc.c']
-#    src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_adc_ex.c']
+if GetDepend(['RT_USING_ADC']):
+   src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_adc.c']
+   src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_adc_ex.c']
 
 if GetDepend(['RT_USING_RTC']):
     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc.c']

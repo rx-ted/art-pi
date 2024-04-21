@@ -51,7 +51,7 @@ if PLATFORM == "gcc":
     AFLAGS = " -c" + DEVICE + " -x assembler-with-cpp -Wa,-mimplicit-it=thumb "
     LFLAGS = (
         DEVICE
-        + " -Wl,--gc-sections,-Map=build/rtthread.map,-cref,-u,Reset_Handler -T ../../debug/linker_scripts/link.lds"
+        + " -Wl,--gc-sections,-Map=build/rtthread.map,-cref,-u,Reset_Handler -T debug/linker_scripts/link.lds"
     )
 
     CPATH = ""
