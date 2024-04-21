@@ -1,4 +1,4 @@
-scons -j16
+scons -j64
 PROJECT_NAME=$(echo $(pwd) | tr "/" "
 " | tail -1)
 # stm32_tooler <-> STM32_Programmer_CLI   

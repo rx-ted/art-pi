@@ -1,13 +1,16 @@
 import os, sys
 import commentjson as json
 
-
+project_name = ""
 CURR = os.getcwd()
-project_name = CURR.split("/")[-1]
+for i in os.listdir(os.path.join(CURR, "output")):
+    if os.path.isfile and ".elf" in i:
+        project_name = i.split(".")[0]
+        break
 
 
 openocd_config = {
-    "cwd": "${workspaceRoot}/projects/" + project_name,
+    "cwd": "${workspaceRoot}",
     "executable": "output/" + project_name + ".elf",
     "name": project_name,
     "request": "attach",
@@ -20,7 +23,7 @@ openocd_config = {
 
 
 def debug():
-    lanuch = os.path.join(CURR, "..", "..", ".vscode", "launch.json")
+    lanuch = os.path.join(CURR, ".vscode", "launch.json")
     if not os.path.exists(lanuch):
         print("Not find ", lanuch)
         return
@@ -48,7 +51,7 @@ def upload():
     s = """scons -j16
 PROJECT_NAME=$(echo $(pwd) | tr "/" "\n" | tail -1)
 # stm32_tooler <-> STM32_Programmer_CLI   
-stm32_tooler -c port=SWD -el ../../debug/stldr/ART-Pi_W25Q64.stldr  -d output/$PROJECT_NAME.elf -v -HardRst"""
+stm32_tooler -c port=SWD -el debug/stldr/ART-Pi_W25Q64.stldr  -d output/$PROJECT_NAME.elf -v -HardRst"""
     with open("upload.sh", "w", encoding="utf-8") as f:
         f.write(s)
     print("success to write upload.sh\nPlease run sh upload.sh to download")
