@@ -8,7 +8,7 @@
 
 #define RT_NAME_MAX 8
 #define RT_CPUS_NR 1
-#define RT_ALIGN_SIZE 4
+#define RT_ALIGN_SIZE 8
 #define RT_THREAD_PRIORITY_32
 #define RT_THREAD_PRIORITY_MAX 32
 #define RT_TICK_PER_SECOND 1000
@@ -40,16 +40,14 @@
 /* Memory Management */
 
 #define RT_USING_MEMPOOL
-#define RT_USING_MEMHEAP
-#define RT_MEMHEAP_FAST_MODE
-#define RT_USING_MEMHEAP_AS_HEAP
-#define RT_USING_MEMHEAP_AUTO_BINDING
+#define RT_USING_SMALL_MEM
+#define RT_USING_SMALL_MEM_AS_HEAP
 #define RT_USING_HEAP
 #define RT_USING_DEVICE
 #define RT_USING_CONSOLE
 #define RT_CONSOLEBUF_SIZE 128
-#define RT_CONSOLE_DEVICE_NAME "uart4"
-#define RT_VER_NUM 0x50100
+#define RT_CONSOLE_DEVICE_NAME "uart1"
+#define RT_VER_NUM 0x50200
 #define RT_BACKTRACE_LEVEL_MAX_NR 32
 #define RT_USING_CACHE
 #define RT_USING_CPU_FFS
@@ -63,7 +61,6 @@
 #define RT_USING_USER_MAIN
 #define RT_MAIN_THREAD_STACK_SIZE 2048
 #define RT_MAIN_THREAD_PRIORITY 10
-#define RT_USING_LEGACY
 #define RT_USING_MSH
 #define RT_USING_FINSH
 #define FINSH_USING_MSH
@@ -83,10 +80,26 @@
 
 #define RT_USING_DFS
 #define DFS_USING_POSIX
+#define DFS_USING_WORKDIR
 #define DFS_FD_MAX 16
 #define RT_USING_DFS_V1
 #define DFS_FILESYSTEMS_MAX 4
 #define DFS_FILESYSTEM_TYPES_MAX 4
+#define RT_USING_DFS_ELMFAT
+
+/* elm-chan's FatFs, Generic FAT Filesystem Module */
+
+#define RT_DFS_ELM_CODE_PAGE 437
+#define RT_DFS_ELM_WORD_ACCESS
+#define RT_DFS_ELM_USE_LFN_3
+#define RT_DFS_ELM_USE_LFN 3
+#define RT_DFS_ELM_LFN_UNICODE_0
+#define RT_DFS_ELM_LFN_UNICODE 0
+#define RT_DFS_ELM_MAX_LFN 255
+#define RT_DFS_ELM_DRIVES 2
+#define RT_DFS_ELM_MAX_SECTOR_SIZE 512
+#define RT_DFS_ELM_REENTRANT
+#define RT_DFS_ELM_MUTEX_TIMEOUT 3000
 #define RT_USING_DFS_DEVFS
 #define RT_USING_DFS_ROMFS
 
@@ -98,13 +111,13 @@
 #define RT_USING_SERIAL_V1
 #define RT_SERIAL_USING_DMA
 #define RT_SERIAL_RB_BUFSZ 64
-#define RT_USING_MTD_NOR
 #define RT_USING_RTC
-#define RT_USING_SPI
-#define RT_USING_SFUD
-#define RT_SFUD_USING_SFDP
-#define RT_SFUD_USING_FLASH_INFO_TABLE
-#define RT_SFUD_SPI_MAX_HZ 50000000
+#define RT_USING_SDIO
+#define RT_SDIO_STACK_SIZE 512
+#define RT_SDIO_THREAD_PRIORITY 15
+#define RT_MMCSD_STACK_SIZE 1024
+#define RT_MMCSD_THREAD_PREORITY 22
+#define RT_MMCSD_MAX_PARTITION 16
 #define RT_USING_PIN
 #define RT_USING_KTIME
 
@@ -139,6 +152,8 @@
 
 #define RT_USING_CPLUSPLUS
 #define RT_USING_CPLUSPLUS11
+#define RT_USING_CPP_WRAPPER
+#define RT_USING_CPP_EXCEPTIONS
 
 /* Network */
 
@@ -196,9 +211,11 @@
 #define PKG_LVGL_THREAD_PRIO 20
 #define PKG_LVGL_THREAD_STACK_SIZE 4096
 #define PKG_LVGL_DISP_REFR_PERIOD 5
+#define PKG_LVGL_USING_SQUARELINE
+#define PKG_LVGL_USING_EXAMPLES
+#define PKG_LVGL_USING_DEMOS
 #define PKG_LVGL_USING_V080311
 #define PKG_LVGL_VER_NUM 0x080311
-#define PKG_USING_LV_MUSIC_DEMO
 
 /* u8g2: a monochrome graphic library */
 
@@ -219,8 +236,6 @@
 
 /* Micrium: Micrium software products porting for RT-Thread */
 
-#define PKG_USING_PERF_COUNTER
-#define PKG_USING_PERF_COUNTER_V2241
 
 /* peripheral libraries and drivers */
 
@@ -305,7 +320,6 @@
 #define BSP_USING_GPIO
 #define BSP_USING_UART
 #define BSP_USING_UART4
-#define BSP_USING_SDRAM
 
 /* External Libraries */
 
