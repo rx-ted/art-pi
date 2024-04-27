@@ -47,3 +47,4 @@ __pycache__
 .config.old
 .sconsign.delite
 packages
+libraries/STM32Cube_FW_H7_V1.11.2

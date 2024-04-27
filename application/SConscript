@@ -7,19 +7,16 @@ src = Glob("*.c")
 src += Glob("*.cpp")
 
 group = []
-
-list = os.listdir(cwd)
-
-
-def isFile(path):
-    if os.path.isdir:
-        isFile()
+# list = os.listdir(cwd)
+# def isFile(path):
+#     if os.path.isdir:
+#         isFile()
 
 
-for item in list:
+# for item in list:
 
-    if os.path.isfile(os.path.join(cwd, item, "SConscript")):
-        group = group + SConscript(os.path.join(item, "SConscript"))
+#     if os.path.isfile(os.path.join(cwd, item, "SConscript")):
+#         group = group + SConscript(os.path.join(item, "SConscript"))
 group += DefineGroup("Applications", src, depend=[""], CPPPATH=path)
 
 Return("group")

@@ -1,23 +1,49 @@
 import os
 import sys
 import rtconfig
+from config.log import Log
+from config.allConfig import *
 
+log = Log("Sconstruct")
+LOCAL_ROOT = "."
+
+TARGET = "{}.elf".format(os.path.basename(os.getcwd()))
+log.info("Create the target name: {}".format(os.path.basename(os.getcwd())))
 
 if os.getenv("RTT_ROOT"):
     RTT_ROOT = os.getenv("RTT_ROOT")
+    log.info("RTT_ROOT path: " + RTT_ROOT)
 
-sys.path = sys.path + [os.path.join(RTT_ROOT, "tools")]
+if os.path.exists(os.path.join(LOCAL_ROOT, "libraries")):
+    SDK_LIB = os.path.join(LOCAL_ROOT, "libraries")
+    log.info("Found SDK library: " + SDK_LIB)
+else:
+    log.err("Not found SDK library!")
+    sys.exit(-1)
+
+if os.path.isdir(os.path.join(RTT_ROOT, "tools")):
+    sys.path = sys.path + [os.path.join(RTT_ROOT, "tools")]
+    log.info("Found tools path: " + os.path.join(RTT_ROOT, "tools"))
+else:
+    log.warn("Not find tools path: " + os.path.join(RTT_ROOT, "tools"))
 try:
     from building import *
 except Exception as e:
-    print("Error message:", e.message)
-    print("Cannot found RT-Thread root directory, please check RTT_ROOT")
-    print(RTT_ROOT)
+    log.err("Error message:".format(e.message))
+    log.err(
+        "Cannot found RT-Thread root directory, please check RTT_ROOT: {}".format(
+            RTT_ROOT
+        )
+    )
     sys.exit(-1)
 
-TARGET = "{}.elf".format(os.path.basename(os.getcwd()))
+Export("rtconfig")
+Export("RTT_ROOT")
+Export("SDK_LIB")
+
 
 DefaultEnvironment(tools=[])
+
 env = Environment(
     tools=["mingw"],
     AS=rtconfig.AS,
@@ -35,25 +61,16 @@ env.PrependENVPath("PATH", rtconfig.EXEC_PATH)
 
 env.AppendUnique(CPPDEFINES=[])
 
-Export("RTT_ROOT")
-Export("rtconfig")
-SDK_LIB = ''
-if os.path.exists("libraries"):
-    SDK_LIB = "libraries"
-else:
-    SDK_LIB = "../../libraries"
-Export("SDK_LIB")
 
 # prepare building environment
 objs = PrepareBuilding(env, RTT_ROOT, has_libcpu=False)
 
-stm32_library = "STM32H7xx_HAL"
-rtconfig.BSP_LIBRARY_TYPE = stm32_library
+rtconfig.BSP_LIBRARY_TYPE = STM32_LIBRARY
 
-if not os.path.exists("libraries"):
-    # include libraries
+if SDK_LIB:
     objs.extend(SConscript(os.path.join(SDK_LIB, "SConscript")))
 
+    # include libraries
     # include applications
     # objs.extend(SConscript(os.path.join(APP_ROOT, 'applications', 'SConscript')))
 

@@ -8,10 +8,10 @@
  */
 
 #include <rtthread.h>
-#include <driver/color.h>
 
 int main(void)
 {
+    rt_kprintf("Hello!\n");
 }
 
 #include "stm32h7xx.h"
