@@ -8,9 +8,21 @@
  */
 
 #include <rtthread.h>
+#include <rtdevice.h>
+#include <drv_gpio.h>
 
+#define LED0_PIN GET_PIN(I, 8)
 int main(void)
 {
+    rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
+    for (size_t i = 0; i < 10; i++)
+    {
+        rt_pin_write(LED0_PIN, PIN_HIGH);
+        rt_thread_mdelay(100);
+        rt_pin_write(LED0_PIN, PIN_LOW);
+        rt_thread_mdelay(100);
+    }
+
     rt_kprintf("Hello!\n");
 }
 

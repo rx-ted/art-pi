@@ -9,11 +9,7 @@ extern "C"
 #include "stm32h7xx_hal.h"
 
   void Error_Handler(void);
-  void HAL_MspInit(void)
-  {
-    __HAL_RCC_SYSCFG_CLK_ENABLE();
-  }
-
+  void HAL_MspInit(void);
 #ifdef __cplusplus
 }
 #endif

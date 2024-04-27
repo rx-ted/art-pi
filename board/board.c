@@ -16,9 +16,7 @@
 #define DBG_TAG "board"
 #define DBG_LVL DBG_INFO
 #include <rtdbg.h>
-#include <stm32h7xx_hal_rcc.h>
-#include <stm32h7xx_hal_pwr_ex.h>
-#include <stm32h7xx_hal_pwr.h>
+
 
 void system_clock_config(int target_freq_mhz)
 {
@@ -145,6 +143,11 @@ RT_WEAK void rt_hw_board_init()
     rt_components_board_init();
 #endif
 }
+
+void start_qspi_logo(){
+    rt_kprintf("Hello");
+}
+INIT_BOARD_EXPORT(start_qspi_logo);
 
 #ifdef RT_USING_PM
 /**

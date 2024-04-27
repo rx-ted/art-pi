@@ -6,6 +6,7 @@ cwd = GetCurrentDir()
 # add general drivers
 src = Glob('*.c')
 src += Glob('port/*.c')
+src += Glob('core/*.c')
 
 # # add cubemx drivers
 # src += Split('''
@@ -14,7 +15,7 @@ src += Glob('port/*.c')
 
 path = [cwd]
 path += [cwd + '/port']
-path += [cwd + '/CubeMX_Config/Core/Inc']
+path += [cwd + '/core']
 
 group = DefineGroup('Drivers', src, depend = [''], CPPPATH = path)
 
