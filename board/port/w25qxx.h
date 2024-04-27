@@ -1,6 +1,7 @@
 #ifndef __W25QXX_H
 #define __W25QXX_H
 
+#ifdef HAL_QSPI_MODULE_ENABLED
 #include "board.h"
 #define W25Q80 0xEF13
 #define W25Q16 0xEF14
@@ -82,4 +83,7 @@ void W25QXX_Reset(void);
 
 void W25Q_Memory_Mapped_Enable(void);
 void MX_QUADSPI_Init(void);
+
+#endif
+
 #endif

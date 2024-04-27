@@ -12,11 +12,12 @@
 #include <board.h>
 #include <drv_common.h>
 #include <rtdevice.h>
+#include "stm32h7xx.h"
+#include <stm32h750xx.h>
 
 #define DBG_TAG "board"
 #define DBG_LVL DBG_INFO
 #include <rtdbg.h>
-
 
 void system_clock_config(int target_freq_mhz)
 {
@@ -144,10 +145,19 @@ RT_WEAK void rt_hw_board_init()
 #endif
 }
 
-void start_qspi_logo(){
-    rt_kprintf("Hello");
+static int vtor_config(void)
+{
+    /* Vector Table Relocation in Internal QSPI_FLASH */
+    SCB->VTOR = QSPI_BASE;
+    return 0;
 }
-INIT_BOARD_EXPORT(start_qspi_logo);
+INIT_BOARD_EXPORT(vtor_config);
+
+static void start_logo()
+{
+    rt_kprintf("Hello rx-ted, what do you need to me do?\n");
+}
+INIT_APP_EXPORT(start_logo);
 
 #ifdef RT_USING_PM
 /**

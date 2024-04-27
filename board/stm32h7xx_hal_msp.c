@@ -1,6 +1,7 @@
 
 #include "main.h"
 
+#ifdef HAL_QSPI_MODULE_ENABLED
 void HAL_MspInit(void)
 {
     __HAL_RCC_SYSCFG_CLK_ENABLE();
@@ -71,7 +72,7 @@ void HAL_QSPI_MspDeInit(QSPI_HandleTypeDef *hqspi)
         HAL_GPIO_DeInit(GPIOF, GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_10 | GPIO_PIN_9);
     }
 }
-
+#endif
 /**
  * @brief UART MSP Initialization
  * This function configures the hardware resources used in this example

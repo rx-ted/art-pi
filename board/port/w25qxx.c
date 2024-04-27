@@ -1,5 +1,6 @@
 #include "w25qxx.h"
-
+#include "main.h"
+#ifdef HAL_QSPI_MODULE_ENABLED
 
 #define W25QXX_MODE_SPI 0
 #define W25QXX_MODE_QPI 1
@@ -13,8 +14,6 @@ uint8_t w25qxx_buf[4096];
 uint16_t w25qxx_mid = W25Q128;
 
 QSPI_HandleTypeDef hqspi;
-
-
 
 void art_pi_boot_show_logo(void)
 {
@@ -703,3 +702,5 @@ void W25Q_Memory_Mapped_Enable(void)
     {
     }
 }
+
+#endif
