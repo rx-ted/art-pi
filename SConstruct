@@ -5,14 +5,14 @@ from config.log import Log
 from config.allConfig import *
 
 log = Log("Sconstruct")
-LOCAL_ROOT = "."
+LOCAL_ROOT = os.getcwd()
 
 TARGET = "{}.elf".format(os.path.basename(os.getcwd()))
 log.info("Create the target name: {}".format(os.path.basename(os.getcwd())))
 
 if os.getenv("RTT_ROOT"):
     RTT_ROOT = os.getenv("RTT_ROOT")
-    log.info("RTT_ROOT path: " + RTT_ROOT)
+    log.info("Found RTT_ROOT path: " + RTT_ROOT)
 
 if os.path.exists(os.path.join(LOCAL_ROOT, "libraries")):
     SDK_LIB = os.path.join(LOCAL_ROOT, "libraries")
@@ -67,12 +67,8 @@ objs = PrepareBuilding(env, RTT_ROOT, has_libcpu=False)
 
 rtconfig.BSP_LIBRARY_TYPE = STM32_LIBRARY
 
-if SDK_LIB:
+if not SDK_LIB:
     objs.extend(SConscript(os.path.join(SDK_LIB, "SConscript")))
-
-    # include libraries
-    # include applications
-    # objs.extend(SConscript(os.path.join(APP_ROOT, 'applications', 'SConscript')))
 
 # objs += PrepareBuilding(env, LIB_ROOT, has_libcpu=False)
 # make a building

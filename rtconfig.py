@@ -61,44 +61,17 @@ if PLATFORM == "gcc":
     # CFLAGS += " -std=c99"
     # CXXFLAGS += " -std=c++11"
 
-    POST_ACTION = '''mkdir -p output\nmv {}.elf output\n{} -O binary output/{}.elf output/{}.bin\n{} -O ihex output/{}.elf output/{}.hex\n{} output/{}.elf \n'''.format(
-        PROJECT_NAME,OBJCPY, PROJECT_NAME,PROJECT_NAME, OBJCPY, PROJECT_NAME,PROJECT_NAME, SIZE,PROJECT_NAME
+    POST_ACTION = """mkdir -p output\nmv {}.elf output\n{} -O binary output/{}.elf output/{}.bin\n{} -O ihex output/{}.elf output/{}.hex\n{} output/{}.elf \n""".format(
+        PROJECT_NAME,
+        OBJCPY,
+        PROJECT_NAME,
+        PROJECT_NAME,
+        OBJCPY,
+        PROJECT_NAME,
+        PROJECT_NAME,
+        SIZE,
+        PROJECT_NAME,
     )
-
-elif PLATFORM == "armcc":
-    # toolchains
-    CC = "armcc"
-    CXX = "armcc"
-    AS = "armasm"
-    AR = "armar"
-    LINK = "armlink"
-    TARGET_EXT = "axf"
-
-    DEVICE = " --cpu Cortex-M7.fp.sp"
-    CFLAGS = "-c " + DEVICE + " --apcs=interwork --c99"
-    AFLAGS = DEVICE + " --apcs=interwork "
-    LFLAGS = (
-        DEVICE
-        + ' --scatter "board/linker_scripts/STM32H750XBHx/link.sct" --info sizes --info totals --info unused --info veneers --list rtthread.map --strict'
-    )
-    CFLAGS += " -I" + EXEC_PATH + "/ARM/ARMCC/include"
-    LFLAGS += " --libpath=" + EXEC_PATH + "/ARM/ARMCC/lib"
-
-    CFLAGS += " -D__MICROLIB "
-    AFLAGS += ' --pd "__MICROLIB SETA 1" '
-    LFLAGS += " --library_type=microlib "
-    EXEC_PATH += "/ARM/ARMCC/bin/"
-
-    if BUILD == "debug":
-        CFLAGS += " -g -O0"
-        AFLAGS += " -g"
-    else:
-        CFLAGS += " -O2"
-
-    CXXFLAGS = CFLAGS
-    CFLAGS += " -std=c99"
-
-    POST_ACTION = "fromelf --bin $TARGET --output rtthread.bin \nfromelf -z $TARGET"
 
 
 def dist_handle(BSP_ROOT, dist_dir):
